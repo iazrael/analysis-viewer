@@ -1,65 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnalysisViewer from './components/AnalysisViewer';
-import LatexText, { renderLatexToFragment } from './components/LatexText';
+import MarkdownWithLatex from './components/MarkdownWithLatex';
 import { DEFAULT_JSON } from './constants';
-import { Code2, Eye, Layout, Braces, FileText } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-
-const MarkdownWithLatex: React.FC<{ content: string }> = ({ content }) => {
-  const components = useMemo(() => {
-    // Helper to process text nodes for LaTeX
-    const process = (children: React.ReactNode) => {
-      return React.Children.map(children, (child) => {
-        if (typeof child === 'string') {
-          return renderLatexToFragment(child);
-        }
-        return child;
-      });
-    };
-
-    return {
-      // Block elements
-      p: ({ children, ...props }: any) => <p className="mb-4 leading-relaxed" {...props}>{process(children)}</p>,
-      h1: ({ children, ...props }: any) => <h1 className="text-3xl font-bold mb-4 mt-6 text-slate-900" {...props}>{process(children)}</h1>,
-      h2: ({ children, ...props }: any) => <h2 className="text-2xl font-bold mb-3 mt-5 text-slate-800" {...props}>{process(children)}</h2>,
-      h3: ({ children, ...props }: any) => <h3 className="text-xl font-bold mb-2 mt-4 text-slate-800" {...props}>{process(children)}</h3>,
-      h4: ({ children, ...props }: any) => <h4 className="text-lg font-bold mb-2 mt-4 text-slate-800" {...props}>{process(children)}</h4>,
-      ul: ({ children, ...props }: any) => <ul className="list-disc list-outside ml-6 mb-4 space-y-1" {...props}>{children}</ul>,
-      ol: ({ children, ...props }: any) => <ol className="list-decimal list-outside ml-6 mb-4 space-y-1" {...props}>{children}</ol>,
-      li: ({ children, ...props }: any) => <li className="" {...props}>{process(children)}</li>,
-      blockquote: ({ children, ...props }: any) => <blockquote className="border-l-4 border-blue-200 bg-blue-50 py-2 px-4 rounded-r italic my-4 text-slate-700" {...props}>{process(children)}</blockquote>,
-      table: ({ children, ...props }: any) => <div className="overflow-x-auto mb-4 border border-slate-200 rounded-lg"><table className="min-w-full divide-y divide-slate-200" {...props}>{children}</table></div>,
-      thead: ({ children, ...props }: any) => <thead className="bg-slate-50" {...props}>{children}</thead>,
-      tbody: ({ children, ...props }: any) => <tbody className="divide-y divide-slate-200 bg-white" {...props}>{children}</tbody>,
-      tr: ({ children, ...props }: any) => <tr {...props}>{children}</tr>,
-      th: ({ children, ...props }: any) => <th className="px-3 py-2 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" {...props}>{process(children)}</th>,
-      td: ({ children, ...props }: any) => <td className="px-3 py-2 text-sm text-slate-700" {...props}>{process(children)}</td>,
-      
-      // Inline elements
-      strong: ({ children, ...props }: any) => <strong className="font-bold text-slate-900" {...props}>{process(children)}</strong>,
-      em: ({ children, ...props }: any) => <em className="italic" {...props}>{process(children)}</em>,
-      a: ({ children, ...props }: any) => <a className="text-blue-600 hover:underline" {...props}>{process(children)}</a>,
-      
-      // Code - skip latex processing
-      code: ({ children, className, ...props }: any) => {
-        const isBlock = /language-(\w+)/.test(className || '');
-        return isBlock 
-            ? <code className={`${className}`} {...props}>{children}</code>
-            : <code className="bg-slate-100 text-red-500 rounded px-1.5 py-0.5 text-sm font-mono border border-slate-200" {...props}>{children}</code>;
-      },
-      pre: ({ children, ...props }: any) => <pre className="bg-slate-800 text-slate-100 p-4 rounded-lg overflow-x-auto mb-4 text-sm font-mono" {...props}>{children}</pre>
-    };
-  }, []);
-
-  return (
-    <div className="font-serif text-slate-800">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-        {content}
-      </ReactMarkdown>
-    </div>
-  );
-};
+import { Eye, Layout, Braces, FileText } from 'lucide-react';
 
 const App: React.FC = () => {
   // Initialize state from localStorage or defaults

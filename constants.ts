@@ -1,28 +1,3 @@
 export const DEFAULT_JSON = `{
-  "analysis": {
-    "homework_title": "等腰直角三角形与圆组合图形的面积计算",
-    "wrong_questions": [
-      {
-        "image_index": 0,
-        "coordinates": [
-          18,
-          5,
-          968,
-          985
-        ],
-        "problem_types": [
-          "计算题"
-        ],
-        "problem_title": "组合图形面积计算",
-        "problem_text": "2. 已知图中等腰直角三角形的直角边边长是 $12\\\\text{ cm}$，求涂色部分的面积。(5分)",
-        "student_answer": "$12 \\\\div 2 = 6$, $12 \\\\times 6 \\\\div 2 = 36$, $6 \\\\times 3.14 = 18.84$, $6 \\\\times 3.14 \\\\times 6 \\\\div 4 = 28.26$, $6 \\\\times 6 \\\\div 2 = 18$。最终未得出正确结果。",
-        "error_tags": [
-          "概念混淆",
-          "解题步骤缺失"
-        ],
-        "error_reason": "学生虽然识别出了图形中的关键组成部分（四分之一圆和小型等腰直角三角形），但在整体逻辑上出现了断层。学生未能建立起“阴影面积 = 大三角形面积 - 空白部分面积”的完整解题思路。此外，计算过程中出现了如 $6 \\\\times 3.14$ 这样错误的公式应用，反映出对圆面积公式的基础掌握不够扎实。",
-        "standard_answer": "解：由题意知，等腰直角三角形的直角边 $a = 12\\\\text{ cm}$，则其面积为：\\n$S_{\\\\triangle ABC} = \\\\frac{1}{2} \\\\times 12 \\\\times 12 = 72\\\\text{ (cm}^2\\\\text{)}$\\n图中半圆的直径为 $12\\\\text{ cm}$，则半径 $r = 6\\\\text{ cm}$。\\n连接圆心 $O$ 与斜边上的交点 $D$（即斜边中点），空白部分可分为一个圆心角为 $90^\\\\circ$ 的扇形 $OBD$ 和一个直角边为 $6\\\\text{ cm}$ 的等腰直角三角形 $ODC$。\\n$S_{\\\\text{扇形}} = \\\\frac{1}{4} \\\\pi r^2 = \\\\frac{1}{4} \\\\times 3.14 \\\\times 6^2 = 28.26\\\\text{ (cm}^2\\\\text{)}$\\n$S_{\\\\triangle ODC} = \\\\frac{1}{2} \\\\times 6 \\\\times 6 = 18\\\\text{ (cm}^2\\\\text{)}$\\n空白部分总面积 $S_{\\\\text{空白}} = 28.26 + 18 = 46.26\\\\text{ (cm}^2\\\\text{)}$\\n涂色部分面积 $S_{\\\\text{阴影}} = S_{\\\\triangle ABC} - S_{\\\\text{空白}} = 72 - 46.26 = 25.74\\\\text{ (cm}^2\\\\text{)}$\\n答：涂色部分的面积是 $25.74\\\\text{ cm}^2$。"
-      }
-    ]
-  }
+  "analysis": "# 作业批改报告: 圆与相似三角形综合练习\\n\\n# 题目 0\\n\\n## 1. 视觉定位与逻辑结构\\n- **题目坐标**: [45, 12, 235, 845]\\n- **图形坐标（如有的话）**: [422, 568, 805, 942]\\n- **题目原文**：\\n19. (8 分) 如图, $AB$ 为 $\\\\odot O$ 的弦, $D, C$ 为 $\\\\overparen{ACB}$ 的三等分点, $AC // BE$.\\n(1) 求证: $\\\\angle A = \\\\angle E$;\\n(2) 若 $BC = 3, BE = 5$, 求 $CE$ 的长.\\n- **图形分析**:\\n> 这是一个圆与三角形组合的几何图形。点 $A, D, C, B$ 顺次分布在圆 $O$ 上。关键判定：根据题意 $D, C$ 是弧 $\\\\overparen{ACB}$ 的三等分点，可推知 $\\\\overparen{AD}=\\\\overparen{DC}=\\\\overparen{CB}$。图形中 $AC // BE$，且直观上点 $D, C, E$ 在同一直线上（这是基于题目可解性的逻辑推断，即 $E$ 是过 $B$ 与 $AC$ 平行的直线与直线 $DC$ 的交点）。\\n\\n## 2. 题目分析与思路\\n- **已知条件**: \\n  1. $\\\\overparen{AD} = \\\\overparen{DC} = \\\\overparen{CB}$。\\n  2. $AC // BE$。\\n  3. $BC = 3, BE = 5$。\\n- **解题策略**: \\n  1. 第一问：利用“等弧所对圆周角相等”得出 $\\\\angle BAC = \\\\angle ACD$；利用平行线性质得出 $\\\\angle ACD = \\\\angle E$，从而通过等量代换证得结论。\\n  2. 第二问：通过 ASA 判定 $\\\\triangle ABC \\\\cong \\\\triangle ECB$，得到 $AC=BE=5$ 且 $CE=AB$。再利用 $\\\\triangle ABC$ 中角之间的倍数关系（$\\\\angle ABC = 2\\\\angle BAC$），构造相似三角形或利用三角函数求出 $AB$。\\n\\n## 3. 标准详解\\n$$\\n\\\\begin{aligned}\\n& \\\\text{(1) 证明：} \\\\\\\\n& \\\\because D, C \\\\text{ 是 } \\\\overparen{ACB} \\\\text{ 的三等分点} \\\\\\\\n& \\\\therefore \\\\overparen{AD} = \\\\overparen{DC} = \\\\overparen{CB} \\\\\\\\n& \\\\therefore \\\\angle BAC = \\\\angle ACD \\\\text{ (等弧所对圆周角相等)} \\\\\\\\n& \\\\because AC // BE \\\\\\\\n& \\\\therefore \\\\angle ACD = \\\\angle E \\\\text{ (两直线平行，内错角相等)} \\\\\\\\n& \\\\therefore \\\\angle BAC = \\\\angle E, \\\\text{ 即 } \\\\angle A = \\\\angle E \\\\\\\\n& \\\\\\\\n& \\\\text{(2) 解：} \\\\\\\\n& \\\\because AC // BE \\\\therefore \\\\angle ACB = \\\\angle CBE \\\\\\\\n& \\\\text{在 } \\\\triangle ABC \\\\text{ 和 } \\\\triangle ECB \\\\text{ 中：} \\\\\\\\n& \\\\begin{cases} \\\\angle BAC = \\\\angle E \\\\\\\\ BC = CB \\\\\\\\ \\\\angle ACB = \\\\angle CBE \\\\end{cases} \\\\\\\\n& \\\\therefore \\\\triangle ABC \\\\cong \\\\triangle ECB \\\\text{ (ASA)} \\\\\\\\n& \\\\therefore AC = BE = 5, AB = CE \\\\\\\\n& \\\\text{设 } \\\\angle BAC = \\\\alpha, \\\\text{ 则 } \\\\overparen{BC} \\\\text{ 的度数为 } 2\\\\alpha \\\\\\\\n& \\\\because \\\\overparen{AC} = \\\\overparen{AD} + \\\\overparen{DC} = 2\\\\overparen{CB}, \\\\therefore \\\\angle ABC = \\\\frac{1}{2}\\\\overparen{AC} = \\\\overparen{CB} \\\\text{ 的度数} = 2\\\\alpha \\\\\\\\n& \\\\text{在 } \\\\triangle ABC \\\\text{ 中，作 } \\\\angle ABC \\\\text{ 的平分线 } BM \\\\text{ 交 } AC \\\\text{ 于 } M \\\\\\\\n& \\\\therefore \\\\angle ABM = \\\\angle CBM = \\\\alpha \\\\\\\\n& \\\\therefore \\\\triangle ABM \\\\text{ 是等腰三角形 } (AM=BM), \\\\text{ 且 } \\\\triangle BCM \\\\sim \\\\triangle ABC \\\\\\\\n& \\\\therefore \\\\frac{BC}{CM} = \\\\frac{AC}{BC} \\\\implies \\\\frac{3}{CM} = \\\\frac{5}{3} \\\\implies CM = 1.8 \\\\\\\\n& \\\\therefore AM = AC - CM = 5 - 1.8 = 3.2, \\\\text{ 故 } BM = 3.2 \\\\\\\\n& \\\\text{根据相似比: } \\\\frac{AB}{BC} = \\\\frac{BM}{CM} \\\\implies \\\\frac{AB}{3} = \\\\frac{3.2}{1.8} \\\\\\\\n& \\\\therefore AB = 3 \\\\times \\\\frac{16}{9} = \\\\frac{16}{3} \\\\\\\\n& \\\\therefore CE = \\\\frac{16}{3}\\n\\\\end{aligned}\\n$$\\n\\n## 4. 学生作答识别\\n**学生过程**:\\n$$\\n\\\\text{（图片中未见学生手写过程）}\\n$$\\n**学生答案**: 未填写\\n\\n## 5. 批改与诊断\\n**判决**: 未作答\\n**错误深度归因**: N/A\\n**老师点评**:\\n> 同学你好，这道题目综合考查了圆的性质和平行线的判定。证明的关键是利用“同圆中等弧对等角”将圆上的角度转化。计算部分则需要你发现 $AC=5$ 之后，利用三角形内角的倍数关系构造相似三角形。这是一个初中几何的典型难点，建议参考标准步骤尝试自主推导一遍。期待看到你的解答！",
 }`;

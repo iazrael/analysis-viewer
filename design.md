@@ -1,7 +1,7 @@
 # Homework Analysis Viewer - Technical Design
 
 ## 1. Overview
-The goal is to build a React application that parses a specific JSON structure related to student homework analysis. The core feature is rendering text fields containing LaTeX mathematics (delimited by `$`) using the KaTeX library.
+The goal is to build a React application that parses a specific JSON structure related to student homework analysis. The core feature is rendering text fields containing LaTeX mathematics (delimited by `$` or `$$`) using the KaTeX library.
 
 ## 2. Architecture
 
@@ -13,24 +13,27 @@ The goal is to build a React application that parses a specific JSON structure r
     *   **InputPanel**: A text area for the user to paste/edit content.
     *   **PreviewPanel**: The main display area.
 *   **AnalysisViewer**: The container for visualizing parsed JSON data.
-    *   **HeaderSection**: Displays `homework_title` (supports LaTeX).
-    *   **QuestionCard**: A repeated component for each item in `wrong_questions`.
-*   **MarkdownWithLatex**: Renders string input using `react-markdown` and `remark-gfm` for structure, injecting `LatexText` logic for text nodes to support math.
+    *   **Core Logic**: Handles the `analysis` field from the JSON.
+    *   **Behavior**: If `analysis` is a string, it renders it as Markdown with LaTeX support.
+*   **MarkdownWithLatex**: A reusable component that renders string content using `react-markdown`.
+    *   **Pipeline**: 
+        1.  Pre-process: Replace literal `\n` with real newlines.
+        2.  `remark-math`: Identifies `$$...$$` and `$...$` blocks as math nodes, preventing them from being split by line breaks.
+        3.  `remark-gfm`: Tables, strikethrough, etc.
+        4.  `remark-breaks`: Converts soft line breaks (newlines) to `<br>`, but ignores math blocks.
+        5.  `rehype-katex`: Renders the identifiable math nodes to HTML using KaTeX.
+        6.  **Implicit Math**: Custom logic in the `components` prop intercepts text nodes in paragraphs/lists to detect and render "implicit" math (math without delimiters) using `LatexText`.
 
 ### 2.2 LatexText Component (Core Utility)
 *   **Responsibility**: Takes a string input, detects LaTeX patterns, and renders them using `katex`.
 *   **Logic**:
-    *   `renderLatexToFragment(text)`: Exported utility that performs the actual regex splitting and KaTeX rendering.
-    1.  **Primary Pass**: Split by explicit delimiters `(\$[^$]+\$)`.
-    2.  **Secondary Pass (Heuristic)**: For text segments not wrapped in `$`, detect implicit math patterns.
-        *   **Pattern**: Sequences containing numbers, geometry variables, LaTeX commands (`\times`, `\div`, `\pi`, etc.), and operators (`=`, `+`, `-`).
-    3.  Render math segments using `katex.renderToString`.
-*   **Usage**: Used directly in JSON viewer (preserving newlines manually) and via helper in Markdown renderer.
+    *   `renderLatexToFragment(text)`: Exported utility.
+    *   **Primary Use**: Handling *implicit* math (e.g., `1+2=3` or `△ABC`) found in plain text nodes that `remark-math` didn't catch.
+    *   **Legacy Support**: Can still handle explicit `$$` or `$` if `remark-math` is disabled or misses something, but primarily acts as a fallback now.
 
-### 2.3 Data Schema (TypeScript Interfaces)
-We will define strict interfaces matching the provided JSON to ensure type safety.
-*   `AnalysisData`
-*   `WrongQuestion`
+### 2.3 Data Schema
+*   `AnalysisRoot`: `{ analysis: string, thinking?: string }`
+    *   The `analysis` field is now a single string containing Markdown formatted text.
 
 ## 3. Styling
 *   **Framework**: Tailwind CSS.
@@ -43,10 +46,6 @@ We will define strict interfaces matching the provided JSON to ensure type safet
 *   `react`, `react-dom`: UI library.
 *   `katex`: Math rendering engine.
 *   `lucide-react`: Icons for UI enhancement.
-*   `react-markdown`, `remark-gfm`: For Text/Markdown mode rendering.
-
-## 5. Error Handling
-*   If `JSON.parse` fails, the App will display a friendly error message in the preview area indicating syntax errors.
-*   **Compatibility**: The viewer handles two JSON structures:
-    1. Standard: `{ "analysis": { ... } }`
-    2. Flat: `{ "homework_title": "...", "wrong_questions": [...] }` (direct analysis object)
+*   `react-markdown`, `remark-gfm`: For Markdown rendering.
+*   `remark-breaks`: For rendering newlines as hard breaks.
+*   `remark-math`, `rehype-katex`: For proper Markdown math parsing and rendering.
